@@ -37,12 +37,28 @@ jobs:
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Finalizando Login"
     
-    - name: Mostrar versión
+    - name: Show version
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}  
       run: |
-        echo "Versión generada: $NEW_VERSION"    
+        echo "Versión generada: $NEW_VERSION"
 
+        
+    - name: Build Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        echo "Inicio Build"
+        docker build -t jmolina24/docker-graphql:$NEW_VERSION .
+        echo "Finalizando Build"
+
+    - name: Push Docker Image
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}    
+      run: |
+        echo "Inicio Push"
+        docker push jmolina24/docker-graphql:$NEW_VERSION
+        echo "Finalizando Push" 
       
     
     #- name: Build the Docker image
