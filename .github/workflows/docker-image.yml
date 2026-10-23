@@ -37,7 +37,7 @@ jobs:
     - name: Push Docker Image
       run: |
         echo "Inicio Push"
-        docker push jmolina24/docker-graphql:0.0.2 .
+        docker push jmolina24/docker-graphql:0.0.2
         echo "Finalizando Push"
 
 
