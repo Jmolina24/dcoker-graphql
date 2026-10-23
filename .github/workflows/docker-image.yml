@@ -32,13 +32,18 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        echo "Version: $NEW_VERSION "
+        echo "Nueva Version: $NEW_VERSION "
         echo "Iniciando Login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Finalizando Login"
     
+    - name: Mostrar versión
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.version }}  
+      run: |
+        echo "Versión generada: $NEW_VERSION"    
 
-        
+      
     
     #- name: Build the Docker image
     #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
