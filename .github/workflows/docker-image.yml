@@ -26,7 +26,7 @@ jobs:
         minor_pattern: "feat:"
         version_format: "${major}.${minor}.${patch}-beta-${increment}"
         bump_each_commit: true
-        debug: true
+        bump_each_commit_patch_pattern: ""
       id: version  
         
     - name: Docker Login
