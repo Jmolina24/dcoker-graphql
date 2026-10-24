@@ -39,27 +39,22 @@ jobs:
     
     - name: Show version
       env:
-        NEW_VERSION: ${{ steps.version.outputs.version }}  
+        VERSION: ${{ steps.version.outputs.version }}
+        VERSION_TYPE: ${{ steps.version.outputs.version_type }}
+        VERSION_TAG: ${{ steps.version.outputs.version_tag }}
+        INCREMENT: ${{ steps.version.outputs.increment }}
+        CHANGED: ${{ steps.version.outputs.changed }}
+        DEBUG_OUTPUT: ${{ steps.version.outputs.debug_output }}
       run: |
-        echo "Versión generada: $NEW_VERSION"
+        echo "Version: $VERSION"
+        echo "Version type: $VERSION_TYPE"
+        echo "Version tag: $VERSION_TAG"
+        echo "Increment: $INCREMENT"
+        echo "Changed: $CHANGED"
+        echo "$DEBUG_OUTPUT"
 
         
-    - name: Build Docker Image
-      env:
-        NEW_VERSION: ${{ steps.version.outputs.version }}
-      run: |
-        echo "Inicio Build"
-        docker build -t jmolina24/docker-graphql:$NEW_VERSION .
-        echo "Finalizando Build"
-
-    - name: Push Docker Image
-      env:
-        NEW_VERSION: ${{ steps.version.outputs.version }}    
-      run: |
-        echo "Inicio Push"
-        docker push jmolina24/docker-graphql:$NEW_VERSION
-        echo "Finalizando Push" 
-      
+         
     
     #- name: Build the Docker image
     #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
