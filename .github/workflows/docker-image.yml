@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "develop" ]
 
 jobs:
 
@@ -23,7 +23,7 @@ jobs:
       with:
         major_pattern: "major:"
         minor_pattern: "feat:"
-        version_format: "${major}.${minor}.${patch}-${increment}"
+        version_format: "${major}.${minor}.${patch}-beta-${increment}"
       id: version  
         
     - name: Docker Login
