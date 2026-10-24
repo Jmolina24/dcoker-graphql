@@ -13,7 +13,7 @@ export class TodoService {
         { id: 4, description: 'Piedra del Tiempo', done: false },
         { id: 5, description: 'Piedra desde el container', done: true },
         { id: 6, description: 'Pruebas desde el github actions', done: true },
-        { id: 7, description: 'Pruebas desde el github', done: true },
+        { id: 99, description: 'Pruebas desde el github', done: true },
     ];
 
     get totalTodos() {
