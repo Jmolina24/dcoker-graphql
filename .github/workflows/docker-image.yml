@@ -2,9 +2,9 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "develop" ]
 
 jobs:
 
@@ -21,9 +21,11 @@ jobs:
     - name: Git Semantic Version
       uses: PaulHatch/semantic-version@v5.4.0
       with:
+        tag_prefix: "v"
         major_pattern: "major:"
         minor_pattern: "feat:"
-        version_format: "${major}.${minor}.${patch}-${increment}"
+        version_format: "${major}.${minor}.${patch}-beta"
+        bump_each_commit: true
       id: version  
         
     - name: Docker Login
@@ -39,10 +41,15 @@ jobs:
     
     - name: Show version
       env:
-        NEW_VERSION: ${{ steps.version.outputs.version }}  
+        VERSION: ${{ steps.version.outputs.version }}
+        VERSION_TYPE: ${{ steps.version.outputs.version_type }}
+        VERSION_TAG: ${{ steps.version.outputs.version_tag }}
+        INCREMENT: ${{ steps.version.outputs.increment }}
+        CHANGED: ${{ steps.version.outputs.changed }}
       run: |
-        echo "Versión generada: $NEW_VERSION"
-
+        echo "Version: $VERSION"
+        echo "Version type: $VERSION_TYPE"
+        echo "Version tag: $VERSION_TAG"
         
     - name: Build Docker Image
       env:
@@ -56,10 +63,11 @@ jobs:
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}    
       run: |
-        echo "Inicio Push"
-        docker push jmolina24/docker-graphql:$NEW_VERSION
-        echo "Finalizando Push" 
-      
+          echo "Inicio Push"
+          docker push jmolina24/docker-graphql:$NEW_VERSION
+          echo "Finalizando Push"
+        
+         
     
     #- name: Build the Docker image
     #  run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
